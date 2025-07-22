@@ -253,7 +253,7 @@ export default function Header({ setCurrentPage }) {
                 <button onClick={() => setCurrentPage('Tasks')}
                     className='hover:text-blue-400 transition-colors flex
                     flex-row items-center gap-2 text-[14px] cursor-pointer'>
-                        Tasks
+                        All Tasks
                 </button>
 
                 <button onClick={() => setCurrentPage('CompletedTasks')}
@@ -262,6 +262,11 @@ export default function Header({ setCurrentPage }) {
                         Completed Tasks
                 </button>
 
+                <button onClick={() => setCurrentPage('CompletedTasks')}
+                    className='hover:text-blue-400 transition-colors flex
+                    flex-row items-center gap-2 text-[14px] cursor-pointer'>
+                        Analytics
+                </button>
 
             </nav>
 
