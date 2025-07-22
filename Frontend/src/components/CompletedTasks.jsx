@@ -73,14 +73,54 @@ export default function CompletedTasks() {
         <div className="text-center text-neutral-400">Loading...</div>
       ) : (
         <div>
-          {<div className="mb-6">
-  <p className="text-lg">
-    Showing <span className="font-semibold">{filteredTasks.length}</span>{' '}
-    completed task{filteredTasks.length !== 1 ? 's' : ''} for{' '}
-    <span className="font-semibold">{selectedPeriod}</span> period.
-  </p>
+  <div className="mb-6">
+    <p className="text-lg">
+      Showing <span className="font-semibold">{filteredTasks.length}</span>{' '}
+      completed task{filteredTasks.length !== 1 ? 's' : ''} for{' '}
+      <span className="font-semibold">{selectedPeriod}</span> period.
+    </p>
+  </div>
+
+  {/* ⬇️ Dropdown Filter */}
+  <div className="mb-6">
+    <label htmlFor="period" className="mr-2 font-medium">
+      Filter by:
+    </label>
+    <select
+      id="period"
+      value={selectedPeriod}
+      onChange={(e) => setSelectedPeriod(e.target.value)}
+      className="text-black px-2 py-1 rounded"
+    >
+      <option value="all">All</option>
+      <option value="today">Today</option>
+      <option value="week">This Week</option>
+      <option value="month">This Month</option>
+    </select>
+    {/* ⬇️ Task List */}
+  <div className="space-y-4">
+    {filteredTasks.length === 0 ? (
+      <p className="text-neutral-400">No completed tasks for this period.</p>
+    ) : (
+      filteredTasks.map((task) => (
+        <div
+          key={task.id}
+          className="bg-neutral-800 p-4 rounded shadow hover:shadow-lg transition"
+        >
+          <h3 className="text-xl font-semibold">{task.title}</h3>
+          <p className="text-sm text-neutral-400">
+            Completed on{' '}
+            {new Date(task.updatedAt).toLocaleDateString(undefined, {
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+            })}
+          </p>
+        </div>
+      ))
+    )}
+  </div>
 </div>
-}
         </div>
       )}
     </div>
