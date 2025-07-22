@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ApiService from '../services/api';
 
 export default function CompletedTasks() {
   const [completedTasks, setCompletedTasks] = useState([]);
@@ -11,10 +12,12 @@ export default function CompletedTasks() {
   }, []);
 
   const fetchCompletedTasks = async () => {
-    // Placeholder for now
     try {
       setLoading(true);
-      // TODO: Fetch tasks here
+      const allTasks = await ApiService.getTasks();
+      const completed = allTasks.filter(task => task.completed);
+      setCompletedTasks(completed);
+      setError(null);
     } catch (err) {
       console.error(err);
       setError('Failed to fetch completed tasks.');
@@ -22,6 +25,39 @@ export default function CompletedTasks() {
       setLoading(false);
     }
   };
+
+  const getFilteredTasks = () => {
+    const now = new Date();
+
+    switch (selectedPeriod) {
+      case 'today':
+        return completedTasks.filter(
+          (task) =>
+            new Date(task.updatedAt).toDateString() === now.toDateString()
+        );
+
+      case 'week':
+        const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        return completedTasks.filter(
+          (task) => new Date(task.updatedAt) >= weekAgo
+        );
+
+      case 'month':
+        const monthAgo = new Date(
+          now.getFullYear(),
+          now.getMonth() - 1,
+          now.getDate()
+        );
+        return completedTasks.filter(
+          (task) => new Date(task.updatedAt) >= monthAgo
+        );
+
+      default:
+        return completedTasks;
+    }
+  };
+
+  const filteredTasks = getFilteredTasks();
 
   return (
     <div className="completedtasks w-full min-h-screen bg-black text-white p-6">
@@ -37,57 +73,16 @@ export default function CompletedTasks() {
         <div className="text-center text-neutral-400">Loading...</div>
       ) : (
         <div>
-          {/* We'll render tasks and filters here later */}
+          {<div className="mb-6">
+  <p className="text-lg">
+    Showing <span className="font-semibold">{filteredTasks.length}</span>{' '}
+    completed task{filteredTasks.length !== 1 ? 's' : ''} for{' '}
+    <span className="font-semibold">{selectedPeriod}</span> period.
+  </p>
+</div>
+}
         </div>
       )}
     </div>
   );
 }
-import ApiService from '../services/api'; 
-
-const fetchCompletedTasks = async () => {
-  try {
-    setLoading(true);
-    const allTasks = await ApiService.getTasks();
-    const completed = allTasks.filter(task => task.completed);
-    setCompletedTasks(completed);
-    setError(null);
-  } catch (err) {
-    console.error(err);
-    setError('Failed to fetch completed tasks.');
-  } finally {
-    setLoading(false);
-  }
-};
-const getFilteredTasks = () => {
-  const now = new Date();
-
-  switch (selectedPeriod) {
-    case 'today':
-      return completedTasks.filter(
-        (task) =>
-          new Date(task.updatedAt).toDateString() === now.toDateString()
-      );
-
-    case 'week':
-      const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-      return completedTasks.filter(
-        (task) => new Date(task.updatedAt) >= weekAgo
-      );
-
-    case 'month':
-      const monthAgo = new Date(
-        now.getFullYear(),
-        now.getMonth() - 1,
-        now.getDate()
-      );
-      return completedTasks.filter(
-        (task) => new Date(task.updatedAt) >= monthAgo
-      );
-
-    default:
-      return completedTasks;
-  }
-};
-
-const filteredTasks = getFilteredTasks();
