@@ -116,92 +116,81 @@ export default function HeaderMobile() {
 
                     {/*serch Results Dropdown */}
                     {showResults && (
-                        <div className="resultsDiv pt-2 pb-2 flex flex-col absolute top-[40px]
-                        left-0 w-[90vw] max-w-[320px] bg-black rounded-[12px] border border-gray-800 z-50 shadow-lg">
-
+                        <div className="resultsDiv pt-2 pb-2 flex flex-col absolute top-[45px] left-0 w-[300px] 
+                        bg-black rounded-[12px]  border border-gray-800 z-50">
                             {results.length > 0 ? (
                                 <>
-
-                                    <div className="px-3 py-2 border-b border-gray-800/20">
-
+                                    <div className="px-3 py-2 border-b border-gray-800">
                                         <p className="text-[12px] text-gray-500 font-medium">
                                             {results.length} result{results.length !== 1 ? 's' : ''} found
                                         </p>
+                                    </div>
+                                    {results.map(item => {
+                                        const getItemIcon = (type) => {
+                                            switch (type) {
+                                                case 'task':
+                                                    return <FaTasks className="text-white w-[24px] h-[12px]" />;
+                                                case 'notification':
+                                                    return <FaBell className="text-white w-[12px] h-[12px]" />;
+                                                case 'message':
+                                                    return <FaComment className="text-white w-[12px] h-[12px]" />;
+                                                default:
+                                                    return <FaMicroscope className="text-white w-[12px] h-[12px]" />;
+                                            }
+                                        };
 
-                                        {results.map(item => {
-                                            const getItemIcon = (type) => {
-                                                switch (type){
-                                                    case 'dashboard':
-                                                        return <FaTask className='text-white w-[24px] h-[12px]'/>;
-                                                    case 'notification':
-                                                        return <FaBell className='text-white w-[12px] h-[12px]'/>;
-                                                    case 'message':
-                                                        return <FaComment className='text-white w-[12px] h-[12px]'/>;
-                                                    default:
-                                                        return <div className="flex flex-col items-center justify-center w-[30px] h-[12px]">
-                                                            <FaMicroscope className='text-white w-[12px] h-[12px]'/>
-                                                            <span className="flex items-center gap-1 text-[10px] text-gray-100">
-                                                                Nothing to See Here
-                                                                <FaQuestion className='inline w-[12px] h-[12px] text-gray-400'/>
-                                                            </span>
-                                                        </div>;
-                                                }
-                                            };
+                                        const getItemColor = (type, status) => {
+                                            switch (type) {
+                                                case 'task':
+                                                    return status === 'completed' ? 'bg-green-500' : 
+                                                           status === 'in-progress' ? 'bg-blue-500' : 
+                                                           'bg-gray-500';
+                                                case 'notification':
+                                                    return 'bg-orange-500';
+                                                case 'message':
+                                                    return 'bg-purple-500';
+                                                default:
+                                                    return 'bg-blue-500';
+                                            }
+                                        };
 
-                                            const getItemColor = (type, status) => {
-                                                switch(type){
-                                                    case 'task':
-                                                        return  status === 'completed' ? bg-green-500 :
-                                                                status === 'in-progress' ? bg-blue-500 :
-                                                                'bg-gray-500';
-                                                    case 'notification':
-                                                        return 'bg-orange-500';
-                                                    case 'message':
-                                                        return 'bg-purple-500';
-                                                    default:
-                                                        return 'bg-blue-500';
-                                                }
-                                            };
-
-                                            return(
-                                                <div key={item.id} className="resultItem mx-2 my-1 p-2
-                                                rounded-[8px] cursor-pointer border border-transparent
-                                                hover:bg-gray-700/30 hover:border-gray-950/50 transition-all duration-200 ease-in-out flex items-center" 
-                                                onClick={() =>{
-                                                    console.log('Clicked item:', item)
-                                                    setShowResults(false)
-                                                }}>
-                                                    <div className="itemContainer w-[28px] h-[28px] rounded-[4px] flex items-center justify-center mr-2">
+                                        return (
+                                            <div key={item.id} className="resultItem mx-2 my-1 p-2 rounded-[8px] 
+                                            text-gray-950/10 cursor-pointer border border-transparent
+                                            hover:bg-gray-700/30 hover:border-gray-950/50 transition-all duration-200 ease-in-out"
+                                            onClick={() => {
+                                                console.log('Clicked item:', item)
+                                                setShowResults(false)
+                                            }}>
+                                                <div className="flex items-center gap-2">
+                                                    <div className={`iconContainer w-[24px] h-[24px] rounded-[4px] 
+                                                    flex items-center justify-center ${getItemColor(item.type, item.status)}`}>
                                                         {getItemIcon(item.type)}
                                                     </div>
-                                                    <div className="textContent flex-1 min-w-0">
-                                                        <h4 className="text-[13px] font-semibold text-gray-800 leading-tight mb-0.5">
-                                                            {item.title}
-                                                        </h4>
-                                                        <p className="text-[11px] text-gray-500 truncate">
+                                                    <div className="textContent flex-1">
+                                                        <h4 className="text-[12px] font-semibold text-gray-800">{item.title}</h4>
+                                                        <p className="max-w-[90%] text-[10px] text-overflow-ellipsis text-gray-500 truncate">
                                                             {item.description}
                                                         </p>
                                                     </div>
                                                 </div>
-                                            )
-
-                                        })}
-
-                                    </div>
-                                
+                                            </div>
+                                        );
+                                    })}
                                 </>
-                            ):(
-                                    <div className="resultItem p-4 text-center flex flex-col items-center justify-center">
-                                        <div className="iconContainer w-[32px] h-[32px] bg-black rounded-full flex items-center justify-center mb-2">
-                                            <FaMicroscope className='text-gray-500 w-[14px] h-[14px]' />
+                            ) : (
+                                <div className="resultItem p-4 text-center ">
+                                    <div className="flex flex-col items-center justify-center py-2">
+                                        <div className="iconContainer w-[32px] h-[32px] bg-black rounded-full 
+                                        flex items-center justify-center mb-2">
+                                            <FaMicroscope className="text-gray-400 w-[14px] h-[14px]" />
                                         </div>
+                                        <p className="text-[12px] text-gray-600 font-medium">No results found</p>
                                     </div>
-                                )
-                            }
-
+                                </div>
+                            )}
                         </div>
                     )}
-
                 </div>
 
                 <button onClick={() => setIsNavOpen(!isNavOpen)} className='p-2 hover:bg-neutral-700/30 rounded-lg 
