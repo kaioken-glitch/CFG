@@ -24,7 +24,7 @@ We are using a **feature-branch workflow** to keep development organized:
 ### 1️⃣ Clone the Repository
 ```bash
 git clone <repo-url>
-cd Duo
+cd CFG
 
 ```
 
