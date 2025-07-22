@@ -59,3 +59,35 @@ const fetchCompletedTasks = async () => {
     setLoading(false);
   }
 };
+const getFilteredTasks = () => {
+  const now = new Date();
+
+  switch (selectedPeriod) {
+    case 'today':
+      return completedTasks.filter(
+        (task) =>
+          new Date(task.updatedAt).toDateString() === now.toDateString()
+      );
+
+    case 'week':
+      const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      return completedTasks.filter(
+        (task) => new Date(task.updatedAt) >= weekAgo
+      );
+
+    case 'month':
+      const monthAgo = new Date(
+        now.getFullYear(),
+        now.getMonth() - 1,
+        now.getDate()
+      );
+      return completedTasks.filter(
+        (task) => new Date(task.updatedAt) >= monthAgo
+      );
+
+    default:
+      return completedTasks;
+  }
+};
+
+const filteredTasks = getFilteredTasks();
