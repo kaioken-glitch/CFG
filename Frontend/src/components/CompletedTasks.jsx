@@ -43,3 +43,19 @@ export default function CompletedTasks() {
     </div>
   );
 }
+import ApiService from '../services/api'; 
+
+const fetchCompletedTasks = async () => {
+  try {
+    setLoading(true);
+    const allTasks = await ApiService.getTasks();
+    const completed = allTasks.filter(task => task.completed);
+    setCompletedTasks(completed);
+    setError(null);
+  } catch (err) {
+    console.error(err);
+    setError('Failed to fetch completed tasks.');
+  } finally {
+    setLoading(false);
+  }
+};
