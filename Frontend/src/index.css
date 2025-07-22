@@ -1,7 +1,12 @@
 @import 'tailwindcss';
 
 :root {
+  width: 100dvw;
+  height: 100dvh;
+  display: flex;
   line-height: 1.5;
+  align-items: center;
+  justify-content: center;
   font-synthesis: none;
   background-color: black;
   font-family: 'Poppins', sans-serif;
