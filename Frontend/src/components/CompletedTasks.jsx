@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import ApiService from '../services/api';
 
 export default function CompletedTasks() {
@@ -81,7 +82,7 @@ export default function CompletedTasks() {
     </p>
   </div>
 
-  {/* ⬇️ Dropdown Filter */}
+  {/*  Dropdown Filter */}
   <div className="mb-6">
     <label htmlFor="period" className="mr-2 font-medium">
       Filter by:
