@@ -3,6 +3,13 @@ import { FaPlus, FaTasks, FaCheckCircle, FaClock, FaExclamationTriangle, FaCalen
 import apiService from '../services/api'
 
 export default function Dashboard({ user }) {
+  // Dynamic greeting based on time
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'morning';
+    if (hour < 18) return 'afternoon';
+    return 'evening';
+  };
   const [tasks, setTasks] = useState([])
   const [showAddTask, setShowAddTask] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -200,7 +207,9 @@ export default function Dashboard({ user }) {
 
       {/* Welcome Section */}
       <div className="welcome-section mb-8">
-        <h1 className="text-3xl font-bold mb-2">Good morning, {user?.name || 'User'}!</h1>
+        <h1 className="text-3xl font-bold mb-2">
+          Good {getGreeting()}, {user?.name || 'User'}!
+        </h1>
         <p className="text-neutral-400">Here's what you have planned for today.</p>
       </div>
 
