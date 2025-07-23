@@ -538,7 +538,7 @@ export default function Dashboard({ user }) {
                       Due Date & Time *
                     </label>
                     <input
-                      type="datetime-local"
+                      type="date"
                       id="dueDate"
                       name="dueDate"
                       value={newTask.dueDate}

@@ -43,5 +43,35 @@
     "completed": true,
     "createdAt": "2025-07-17T11:40:33.392Z",
     "updatedAt": "2025-07-22T15:25:15.144Z"
+  },
+  {
+    "id": 4,
+    "title": "Flowstate Project",
+    "description": "Group project to test workplace coordination on a tight schedule and deadline.",
+    "category": "Work",
+    "priority": "high",
+    "dueDate": "2025-07-24",
+    "estimatedTime": "11",
+    "assignedTo": "Group",
+    "tags": "urgent, deadlines, completions, coordination",
+    "status": "in-progress",
+    "completed": false,
+    "createdAt": "2025-07-23T08:21:57.773Z",
+    "updatedAt": "2025-07-23T08:21:57.773Z"
+  },
+  {
+    "id": 5,
+    "title": "Branch Merges",
+    "description": "Clear and concise error checking and revision of code before merging to dev for production and then main",
+    "category": "Work",
+    "priority": "high",
+    "dueDate": "2025-07-23",
+    "estimatedTime": "10",
+    "assignedTo": "self",
+    "tags": "urgent, deadlines, completions, coordination",
+    "status": "in-progress",
+    "completed": false,
+    "createdAt": "2025-07-23T08:28:04.041Z",
+    "updatedAt": "2025-07-23T08:28:04.041Z"
   }
 ]
