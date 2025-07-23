@@ -1,122 +1,105 @@
 import React, { useState } from 'react'
 import logo from '../assets/logo.svg'
-import { FaComment, FaMicroscope, FaTimes, FaBars } from 'react-icons/fa';
+import { FaTasks, FaBell, FaComment, FaMicroscope, FaBars, FaTimes } from 'react-icons/fa'
 
-export default function HeaderMobile() {
-    const [searchQuery, setSearchQuery] = useState('');
-    const [showResults, setShowResults] = useState(false);
-    const [results, setResults] = useState([]);
-    const [isNavOpen, setIsNavOpen] = useState(false);
+export default function HeaderMobile({ setCurrentPage }) {
+    const [searchQuery, setSearchQuery] = useState('')
+    const [showResults, setShowResults] = useState(false)
+    const [results, setResults] = useState([])
+    const [isNavOpen, setIsNavOpen] = useState(false)
 
+    // Mock search function - replace with actual search logic
     const handleSearch = (query) => {
         setSearchQuery(query)
-
+        
         if (query.length > 0) {
+            // Mock results - replace with actual search API call
             const mockResults = [
                 {
-                    id: "1",
-                    title: "Task Management",
-                    description: "Manage your daily tasks efficiently.",
-                    type: "Feature",
-                    status: "Active"
+                    id: 1,
+                    title: "Complete project proposal",
+                    description: "Finish writing the project proposal for the new client",
+                    type: "task",
+                    status: "in-progress"
                 },
                 {
-                    id: "2",
-                    title: "Notifications",
-                    description: "Stay updated with real-time alerts.",
-                    type: "Feature",
-                    status: "Active"
+                    id: 2,
+                    title: "Team meeting reminder",
+                    description: "Weekly standup meeting at 2 PM",
+                    type: "notification",
+                    status: "pending"
                 },
                 {
-                    id: "3",
-                    title: "Comments",
-                    description: "Collaborate with your team using comments.",
-                    type: "Feature",
-                    status: "Inactive"
-                },
-                {
-                    id: "4",
-                    title: "Analytics",
-                    description: "View detailed analytics and reports.",
-                    type: "Dashboard",
-                    status: "Active"
-                },
-                {
-                    id: "5",
-                    title: "Completed Tasks",
-                    description: "Review your achievements and completed tasks.",
-                    type: "View",
-                    status: "Active"
+                    id: 3,
+                    title: "Message from John",
+                    description: "Hey, can we discuss the budget changes?",
+                    type: "message",
+                    status: "unread"
                 }
-            ].filter(item =>
+            ].filter(item => 
                 item.title.toLowerCase().includes(query.toLowerCase()) ||
                 item.description.toLowerCase().includes(query.toLowerCase())
-            );
+            )
+            
             setResults(mockResults)
             setShowResults(true)
-        }else{
+        } else {
             setShowResults(false)
             setResults([])
         }
     }
 
-    const handleInputFocus = () =>{
-        if(searchQuery.length > 0){
+    const handleInputFocus = () => {
+        if (searchQuery.length > 0) {
             setShowResults(true)
         }
     }
 
     const handleInputBlur = () => {
-        setTimeout(() => {
-            setShowResults(false)
-        }, 200); // Delay to allow click on results
+        setTimeout(() => setShowResults(false), 200)
     }
 
-    const handleNavItemClick = () => {
+    const handleNavItemClick = (page) => {
         setCurrentPage(page)
-        setIsNavOpen(false)
+        setIsNavOpen(false) // Close nav after selection
     }
 
     return (
         <>
-            <header className='border-b border-neutral-700 text-white p-4
-            w-[100%] h-[60px] flex flex-row items-center justify-around select-none 
-            relative'>
-
-                {/*logo as  a button */}
-                <button onClick={() => setCurrentPage('dashboard')} className='
-                flex items-center cursor-pointer justify-center'
-                >
-
-                    <img src={logo} alt="flogo" className='w-[90px] h-[30px]'/>
-
+            <header className="border-b border-neutral-700 text-white p-4
+            w-full flex flex-row items-center justify-between
+            select-none relative">
+                
+                {/* Logo */}
+                <button onClick={() => setCurrentPage('dashboard')} className="flex items-center
+                cursor-pointer">
+                    <img src={logo} alt="flowstate" className='w-[90px] h-[30px]'/>
                 </button>
 
-                {/* Search bar */}
+                {/* Search Bar */}
                 <div className="searchContainer border border-neutral-700 rounded-[6px]
-                flex flex-row items-center justify-between flex-1 mx-4 max-w-[200px]
-                relative">
-
+                flex flex-row items-center justify-between flex-1 mx-4 max-w-[200px] h-[35px] relative">
                     <input 
-                    type="text" 
-                    name="search" 
-                    id="search"
-                    placeholder='Search...'
-                    value={searchQuery}
-                    onChange={(e) => handleSearch(e.target.value)}
-                    onFocus={handleInputFocus}
-                    onBlur={handleInputBlur}
-                    className='indent-2 bg-transparent text-white w-full h-full outline-none
-                    placeholder:text-neutral-500 font-poppins text-[14px] caret-blue-400'
-                    autoComplete='off'
-                    autoCapitalize='off'
-                    autoCorrect='off'
-                    spellCheck='false'
+                        type="text" 
+                        name="search" 
+                        id="searchInput" 
+                        placeholder='Search...' 
+                        value={searchQuery}
+                        onChange={(e) => handleSearch(e.target.value)}
+                        onFocus={handleInputFocus}
+                        onBlur={handleInputBlur}
+                        className='indent-2 bg-transparent text-white w-full h-full
+                        outline-none placeholder:text-neutral-500 font-poppins text-[14px]
+                        caret-blue-400' 
+                        autoComplete='off' 
+                        autoCorrect='off' 
+                        spellCheck="false"
+                        autoCapitalize="off"
                     />
 
-                    {/*serch Results Dropdown */}
+                    {/* Search Results Dropdown */}
                     {showResults && (
-                        <div className="resultsDiv pt-2 pb-2 flex flex-col absolute top-[45px] left-0 w-[300px] 
+                        <div className="resultsDiv pt-2 pb-2 flex flex-col absolute top-[40px] left-0 w-[300px] 
                         bg-black rounded-[12px]  border border-gray-800 z-50">
                             {results.length > 0 ? (
                                 <>
@@ -193,97 +176,81 @@ export default function HeaderMobile() {
                     )}
                 </div>
 
-                <button onClick={() => setIsNavOpen(!isNavOpen)} className='p-2 hover:bg-neutral-700/30 rounded-lg 
-                transition-colors'>
-
-                    {isNavOpen ? <FaTimes className='w-5 h-5' /> : <FaBars className='w-5 h-5' />}
-
+                {/* Hamburger Menu Button */}
+                <button 
+                    onClick={() => setIsNavOpen(!isNavOpen)}
+                    className="p-2 hover:bg-neutral-700 rounded-lg transition-colors"
+                >
+                    {isNavOpen ? <FaTimes className="w-5 h-5" /> : <FaBars className="w-5 h-5" />}
                 </button>
-
             </header>
 
-            {/*Mobile nav Overlay displayed on toggle dropdown by button */}
+            {/* Mobile Navigation Overlay */}
             {isNavOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 z-40"
-                onClick={() => setIsNavOpen(false)}>
-
-                    <div className="fixed top-0 right-0 h-full w-64 bg-black
-                    shadow-lg z-50 transform transition-transform duration-300 ease-in-out
-                    border-l border-neutral-700 " onClick={(e) => e.stopPropagation}>
-
-                        {/*the nav header */}
-                        <div className="flex items-center justify-between p-4 border-b
-                        border-neutral-700">
-
+                <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={() => setIsNavOpen(false)}>
+                    <div className="fixed top-0 right-0 h-full w-64 bg-black shadow-lg z-50 
+                    transform transition-transform duration-300 ease-in-out border-l border-neutral-700"
+                    onClick={(e) => e.stopPropagation()}>
+                        
+                        {/* Navigation Header */}
+                        <div className="flex items-center justify-between p-4 border-b border-neutral-700">
                             <h3 className="text-white font-semibold">Navigation</h3>
-
                             <button onClick={() => setIsNavOpen(false)}>
-                                <FaTimes className='w-5 h-5 text-white' />
+                                <FaTimes className="text-white w-5 h-5" />
                             </button>
-
                         </div>
 
-                        {/*nav items */}
-                        <nav className="flex flex-col items-center justify-start p-4 space-y-2">
-
-                            <button className="flex items-center gap-3 p-3 text-white
-                            hover-bg-gray900/70 rounded-lg transition-colors text-left">
+                        {/* Navigation Items */}
+                        <nav className="flex flex-col p-4 space-y-2">
+                            <button 
+                                onClick={() => handleNavItemClick('dashboard')} 
+                                className="flex items-center gap-3 p-3 text-white hover:bg-gray-900/70 
+                                rounded-lg transition-colors text-left"
+                            >
                                 Dashboard
                             </button>
                             
-                            <button className="flex items-center gap-3 p-3 text-white
-                            hover-bg-gray900/70 rounded-lg transition-colors text-left">
+                            <button 
+                                onClick={() => handleNavItemClick('tasks')} 
+                                className="flex items-center gap-3 p-3 text-white hover:bg-gray-900/70 
+                                rounded-lg transition-colors text-left"
+                            >
                                 All Tasks
                             </button>
-
-                            <button className="flex items-center gap-3 p-3 text-white
-                            hover-bg-gray900/70 rounded-lg transition-colors text-left">
+                            
+                            <button 
+                                onClick={() => handleNavItemClick('completed')} 
+                                className="flex items-center gap-3 p-3 text-white hover:bg-gray-900/70
+                                rounded-lg transition-colors text-left"
+                            >
                                 Completed
                             </button>
-
-                            <button className="flex items-center gap-3 p-3 text-white
-                            hover-bg-gray900/70 rounded-lg transition-colors text-left">
+                            
+                            <button 
+                                onClick={() => handleNavItemClick('analytics')} 
+                                className="flex items-center gap-3 p-3 text-white hover:bg-gray-900/70
+                                rounded-lg transition-colors text-left"
+                            >
                                 Analytics
                             </button>
-
-
                         </nav>
 
+                        {/* Footer */}
                         <div className="absolute bottom-4 left-4 right-4">
-
                             <div className="border-t border-neutral-700 pt-4">
-
-                                <button className="flex items-center gap-3 p-3 text-white
-                                hover:bg-gray900/70 rounded-lg transition-colors text-left
-                                w-full">
-                                    
-                                    <div className="w-8 h-8 bg-blue-600 rounded-full
-                                    flex items-center justify-center">
-
+                                <button className="flex items-center gap-3 p-3 text-white hover:bg-gray-900 
+                                rounded-lg transition-colors w-full text-left">
+                                    <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
                                         <span className="text-sm font-medium">U</span>
-
                                     </div>
-
                                     <div>
-
-                                        <p className="text-sm font-medium">
-                                            User Profile
-                                        </p>
-
-                                        <p className="text-xs text-neutral-400">
-                                            Settings
-                                        </p>
-
+                                        <p className="text-sm font-medium">User Profile</p>
+                                        <p className="text-xs text-neutral-400">Settings & More</p>
                                     </div>
-
                                 </button>
-
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
             )}
         </>

@@ -13,6 +13,7 @@ import {
   FaFlag,
   FaUser,
   FaSave,
+  FaTrash
 } from "react-icons/fa";
 import ApiService from "../services/api";
 
