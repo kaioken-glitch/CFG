@@ -13,6 +13,9 @@ function App() {
   const renderPage = () => {
     switch (currentPage){
       case 'dashboard': return <Dashboard />
+      case 'tasks': return <Tasks/>
+      case 'completed': return <CompletedTasks/>
+      case 'analytics': return <Analytics/>
       default: return <Dashboard />
     }
   }
