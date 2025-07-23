@@ -54,10 +54,10 @@
     "estimatedTime": "11",
     "assignedTo": "Group",
     "tags": "urgent, deadlines, completions, coordination",
-    "status": "in-progress",
-    "completed": false,
+    "status": "completed",
+    "completed": true,
     "createdAt": "2025-07-23T08:21:57.773Z",
-    "updatedAt": "2025-07-23T08:21:57.773Z"
+    "updatedAt": "2025-07-23T14:17:49.895Z"
   },
   {
     "id": 5,
@@ -72,6 +72,6 @@
     "status": "completed",
     "completed": true,
     "createdAt": "2025-07-23T08:28:04.041Z",
-    "updatedAt": "2025-07-23T09:47:37.850Z"
+    "updatedAt": "2025-07-23T14:17:44.640Z"
   }
 ]

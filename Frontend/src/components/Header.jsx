@@ -220,6 +220,14 @@ export default function Header({ setCurrentPage }) {
                 flex flex-row items-center gap-2 text-[14px] cursor-pointer">
                     Analytics
                 </button>
+                <button 
+                    onClick={() => setCurrentPage('user')}
+                    className="hover:text-blue-400 transition-colors flex flex-row items-center gap-2 text-[14px] cursor-pointer px-3 py-2 rounded-lg"
+                    style={{ minWidth: '120px' }}
+                >
+                    <span className="flex items-center justify-center w-7 h-7 bg-blue-600 rounded-full text-white font-semibold text-[15px]">U</span>
+                    <span className="font-medium">User Profile</span>
+                </button>
             </nav>
 
         </header>

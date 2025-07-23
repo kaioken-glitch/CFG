@@ -238,8 +238,11 @@ export default function HeaderMobile({ setCurrentPage }) {
                         {/* Footer */}
                         <div className="absolute bottom-4 left-4 right-4">
                             <div className="border-t border-neutral-700 pt-4">
-                                <button className="flex items-center gap-3 p-3 text-white hover:bg-gray-900 
-                                rounded-lg transition-colors w-full text-left">
+                                <button 
+                                    className="flex items-center gap-3 p-3 text-white hover:bg-gray-900 
+                                    rounded-lg transition-colors w-full text-left"
+                                    onClick={() => handleNavItemClick('user')}
+                                >
                                     <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
                                         <span className="text-sm font-medium">U</span>
                                     </div>

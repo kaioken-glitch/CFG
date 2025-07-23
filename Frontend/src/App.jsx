@@ -6,6 +6,7 @@ import Dashboard from './components/Dashboard'
 import Tasks from './components/Tasks'
 import CompletedTasks from './components/CompletedTasks'
 import Analytics from './components/Analytics'
+import User from './components/User'
 import HeaderMobile from './components/HeaderMobile'
 import { useViewport } from './components/useViewport'
 
@@ -19,6 +20,7 @@ function App() {
       case 'tasks': return <Tasks/>
       case 'completed': return <CompletedTasks/>
       case 'analytics': return <Analytics/>
+      case 'user': return <User />
       default: return <Dashboard />
     }
   }
