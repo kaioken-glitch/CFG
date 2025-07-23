@@ -157,19 +157,19 @@ function Tasks() {
 
   const getPriorityColor = (priority) => {
     switch (priority) {
-      case 'high': return 'bg-red-900 text-red-300'
-      case 'medium': return 'bg-yellow-900 text-yellow-300'
-      case 'low': return 'bg-green-900 text-green-300'
-      default: return 'bg-neutral-700 text-neutral-300'
+      case 'high': return 'bg-red-800 text-red-300'
+      case 'medium': return 'bg-yellow-800 text-yellow-300'
+      case 'low': return 'bg-green-800 text-green-300'
+      default: return 'bg-neutral-600 text-neutral-300'
     }
   }
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'completed': return 'bg-green-900 text-green-300'
-      case 'in-progress': return 'bg-blue-900 text-blue-300'
-      case 'review': return 'bg-purple-900 text-purple-300'
-      case 'blocked': return 'bg-red-900 text-red-300'
+      case 'completed': return 'bg-green-800 text-green-300'
+      case 'in-progress': return 'bg-blue-800 text-blue-300'
+      case 'review': return 'bg-purple-800 text-purple-300'
+      case 'blocked': return 'bg-red-800 text-red-300'
       case 'todo': return 'bg-neutral-700 text-neutral-300'
       default: return 'bg-neutral-700 text-neutral-300'
     }
@@ -209,7 +209,7 @@ function Tasks() {
 
       {/* Error Display */}
       {error && (
-        <div className="bg-red-600 text-white p-4 rounded-lg mb-4 flex items-center justify-between">
+        <div className="bg-red-500 text-white p-4 rounded-lg mb-4 flex items-center justify-between">
           <span>{error}</span>
           <button onClick={() => setError(null)} className="text-white hover:text-gray-200">
             <FaTimes />
