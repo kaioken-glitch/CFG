@@ -110,5 +110,21 @@
     "createdAt": "2025-07-24T07:47:38.629Z",
     "updatedAt": "2025-07-24T07:47:38.629Z",
     "userId": 1
+  },
+  {
+    "id": 8,
+    "title": "Project Slides",
+    "description": "To create a complete and comprehensive project slide outlining member roles and application use cases, and functions.",
+    "category": "Work",
+    "priority": "high",
+    "dueDate": "2025-07-24",
+    "estimatedTime": "3",
+    "assignedTo": "Group",
+    "tags": "urgent, deadlines, completions, coordination",
+    "status": "in-progress",
+    "completed": false,
+    "createdAt": "2025-07-24T12:59:15.189Z",
+    "updatedAt": "2025-07-24T12:59:15.189Z",
+    "userId": 2
   }
 ]

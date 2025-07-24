@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import apiService from '../services/api'
 import logo from '../assets/logo.svg'
+import apiService from '../Services/api'
 import { FiLogOut } from 'react-icons/fi';
 import { FaTasks, FaBell, FaComment, FaMicroscope } from 'react-icons/fa'
 
@@ -14,8 +14,10 @@ export default function Header({ setCurrentPage, user, onLogout }) {
         setSearchQuery(query)
         if (query.length > 0) {
             try {
-                const tasks = await apiService.searchTasks(query, user?.id)
-                // Optionally, you can map tasks to add a type if needed
+                // Only pass user.id if it exists
+                const tasks = user?.id
+                    ? await apiService.searchTasks(query, user.id)
+                    : await apiService.searchTasks(query)
                 const results = tasks.map(task => ({
                     ...task,
                     type: 'task',

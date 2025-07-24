@@ -5,5 +5,12 @@
     "email": "majanja@ujanja.inc",
     "password": "$2b$10$PgpSMqqYHOpK6iSkl9C/suF9dsgF97aRoWl/PoMKtcCaGWUygM8na",
     "createdAt": "2025-07-24T08:41:13.278Z"
+  },
+  {
+    "id": 2,
+    "name": "Hugho ",
+    "email": "villainmain@gmail.com",
+    "password": "$2b$10$q.rDZcvf2DVSLVFodSUZY.43M3WpQ/lQphJpI/xiLR/H87iwDm1Cy",
+    "createdAt": "2025-07-24T12:55:41.383Z"
   }
 ]

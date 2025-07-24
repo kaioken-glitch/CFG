@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import apiService from '../services/api'
+import apiService from '../Services/api'
 import logo from '../assets/logo.svg'
 import { FaTasks, FaBell, FaComment, FaMicroscope, FaBars, FaTimes } from 'react-icons/fa'
 
@@ -11,25 +11,28 @@ export default function HeaderMobile({ setCurrentPage, user }) {
 
     // Real search function using apiService
     const handleSearch = async (query) => {
-        setSearchQuery(query)
-        if (query.length > 0) {
-            try {
-                const tasks = await apiService.searchTasks(query, user?.id)
-                const results = tasks.map(task => ({
-                    ...task,
-                    type: 'task',
-                }))
-                setResults(results)
-                setShowResults(true)
-            } catch (err) {
-                setResults([])
-                setShowResults(true)
-            }
-        } else {
-            setShowResults(false)
+    setSearchQuery(query)
+    if (query.length > 0) {
+        try {
+            // Only pass user.id if it exists
+            const tasks = user?.id
+                ? await apiService.searchTasks(query, user.id)
+                : await apiService.searchTasks(query)
+            const results = tasks.map(task => ({
+                ...task,
+                type: 'task',
+            }))
+            setResults(results)
+            setShowResults(true)
+        } catch (err) {
             setResults([])
+            setShowResults(true)
         }
+    } else {
+        setShowResults(false)
+        setResults([])
     }
+}
 
     const handleInputFocus = () => {
         if (searchQuery.length > 0) {
