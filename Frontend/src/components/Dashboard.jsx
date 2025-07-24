@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { FaPlus, FaTasks, FaCheckCircle, FaClock, FaExclamationTriangle, FaCalendarAlt, FaTimes, FaFlag, FaUser, FaTag } from 'react-icons/fa'
-import apiService from '../services/api'
+import apiService from '../Services/api'
 
 export default function Dashboard({ user }) {
   // Defensive: fallback to empty object if user is null/undefined

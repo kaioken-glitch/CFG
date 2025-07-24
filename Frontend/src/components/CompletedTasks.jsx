@@ -11,7 +11,7 @@ import {
   FaTasks,
   FaChartLine
 } from 'react-icons/fa'
-import ApiService from '../services/api'
+import ApiService from '../Services/api'
 
 export default function CompletedTasks() {
   const [completedTasks, setCompletedTasks] = useState([])
