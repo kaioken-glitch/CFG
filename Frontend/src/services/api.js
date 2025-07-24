@@ -8,14 +8,14 @@ class ApiService {
 
   // Auth operations
   async login(email, password) {
-    return this.request('/login', {
+    return this.request('/api/login', {
       method: 'POST',
       body: JSON.stringify({ email, password })
     });
   }
 
   async signup(name, email, password) {
-    return this.request('/signup', {
+    return this.request('/api/signup', {
       method: 'POST',
       body: JSON.stringify({ name, email, password })
     });
@@ -49,40 +49,40 @@ class ApiService {
 
   // Health check
   async healthCheck() {
-    return this.request('/health')
+    return this.request('/api/health')
   }
 
   // Task operations
   async getTasks(filters = {}) {
-  // Remove undefined or null userId
+    // Remove undefined or null userId
     if (filters.userId === undefined || filters.userId === null) {
       delete filters.userId;
     }
     const queryParams = new URLSearchParams(filters).toString();
-    const endpoint = queryParams ? `/tasks?${queryParams}` : '/tasks';
+    const endpoint = queryParams ? `/api/tasks?${queryParams}` : '/api/tasks';
     return this.request(endpoint);
   }
 
   async getTask(id) {
-    return this.request(`/tasks/${id}`)
+    return this.request(`/api/tasks/${id}`)
   }
 
   async createTask(taskData) {
-    return this.request('/tasks', {
+    return this.request('/api/tasks', {
       method: 'POST',
       body: JSON.stringify(taskData),
     })
   }
 
   async updateTask(id, updates) {
-    return this.request(`/tasks/${id}`, {
+    return this.request(`/api/tasks/${id}`, {
       method: 'PUT',
       body: JSON.stringify(updates),
     })
   }
 
   async deleteTask(id) {
-    return this.request(`/tasks/${id}`, {
+    return this.request(`/api/tasks/${id}`, {
       method: 'DELETE',
     })
   }
@@ -99,7 +99,7 @@ class ApiService {
   }
 
   async getTaskStats() {
-    return this.request('/tasks/stats/overview')
+    return this.request('/api/tasks/stats/overview')
   }
 
   // Utility methods
