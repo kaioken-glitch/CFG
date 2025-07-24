@@ -1,30 +1,9 @@
 [
   {
     "id": 1,
-    "name": "mjanja",
+    "name": "majanja",
     "email": "majanja@ujanja.inc",
-    "password": "$2b$10$4DhNGgUqoXUf81b5Lu2QzOXit.pTJMdo8UnMlgOhrgpAwPG1y6B1.",
-    "createdAt": "2025-07-24T06:32:39.303Z"
-  },
-  {
-    "id": 2,
-    "name": "hugo",
-    "email": "workerone@gmail.com",
-    "password": "$2b$10$PF6/3Dx8q8Uwj5NlJa6E.O9gAEgSwfU0BYrXtaSMXMBWT/O6JiM.W",
-    "createdAt": "2025-07-24T06:40:12.406Z"
-  },
-  {
-    "id": 3,
-    "name": "Similique qui volupt",
-    "email": "hylijawaw@mailinator.com",
-    "password": "$2b$10$H5H1WdDzrWoeYuLOI5uneuLQZUFN8sXWzMM1bnvpufY.kSRVbsirS",
-    "createdAt": "2025-07-24T07:20:16.271Z"
-  },
-  {
-    "id": 4,
-    "name": "mkorino",
-    "email": "onlyonedelo@gmail.com",
-    "password": "$2b$10$0IGWK3029hA1HISlXrSGvOHleE7hReWcNPC.6KjvSG8FgKYrZMK/O",
-    "createdAt": "2025-07-24T07:29:34.015Z"
+    "password": "$2b$10$PgpSMqqYHOpK6iSkl9C/suF9dsgF97aRoWl/PoMKtcCaGWUygM8na",
+    "createdAt": "2025-07-24T08:41:13.278Z"
   }
 ]
