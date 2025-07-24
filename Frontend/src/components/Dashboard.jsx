@@ -3,6 +3,8 @@ import { FaPlus, FaTasks, FaCheckCircle, FaClock, FaExclamationTriangle, FaCalen
 import apiService from '../services/api'
 
 export default function Dashboard({ user }) {
+  // Defensive: fallback to empty object if user is null/undefined
+  const safeUser = user || {};
   // Dynamic greeting based on time
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -37,7 +39,8 @@ export default function Dashboard({ user }) {
       setLoading(true)
       setError(null)
       
-      const data = await apiService.getTasks()
+      // Only fetch tasks for the logged-in user
+      const data = await apiService.getTasks({ userId: safeUser.id })
       setTasks(data)
       
     } catch (err) {
@@ -113,7 +116,8 @@ export default function Dashboard({ user }) {
         completed: false
       }
 
-      const createdTask = await apiService.createTask(taskData)
+      // Attach userId to new task
+      const createdTask = await apiService.createTask({ ...taskData, userId: safeUser.id })
       setTasks(prev => [...prev, createdTask])
       
       // Reset form
@@ -208,7 +212,7 @@ export default function Dashboard({ user }) {
       {/* Welcome Section */}
       <div className="welcome-section mb-8">
         <h1 className="text-3xl font-bold mb-2">
-          Good {getGreeting()}, {user?.name || 'User'}!
+          Good {getGreeting()}, {safeUser.name || 'User'}!
         </h1>
         <p className="text-neutral-400">Here's what you have planned for today.</p>
       </div>

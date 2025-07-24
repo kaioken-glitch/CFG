@@ -72,6 +72,36 @@
     "status": "completed",
     "completed": true,
     "createdAt": "2025-07-23T08:28:04.041Z",
-    "updatedAt": "2025-07-23T14:17:44.640Z"
+    "updatedAt": "2025-07-24T07:12:57.607Z"
+  },
+  {
+    "id": 6,
+    "title": "Implement Login",
+    "description": "TO create a login component for user login and validation with password hashing provided by the bycrypt package",
+    "category": "Work",
+    "priority": "high",
+    "dueDate": "2025-07-23",
+    "estimatedTime": "10.5",
+    "assignedTo": "self",
+    "tags": "Timely, Protection, Update",
+    "status": "completed",
+    "completed": true,
+    "createdAt": "2025-07-24T07:07:54.679Z",
+    "updatedAt": "2025-07-24T07:21:53.456Z"
+  },
+  {
+    "id": 7,
+    "title": "Create Presentation Slides",
+    "description": "To create project presentation files , for class presentation for end of phase project",
+    "category": "Work",
+    "priority": "high",
+    "dueDate": "2025-07-26",
+    "estimatedTime": "5",
+    "assignedTo": "Group",
+    "tags": "urgent, deadline, commitments",
+    "status": "todo",
+    "completed": false,
+    "createdAt": "2025-07-24T07:47:38.629Z",
+    "updatedAt": "2025-07-24T07:47:38.629Z"
   }
 ]

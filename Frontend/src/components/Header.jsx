@@ -1,47 +1,31 @@
 import React, { useState } from 'react'
+import apiService from '../services/api'
 import logo from '../assets/logo.svg'
+import { FiLogOut } from 'react-icons/fi';
 import { FaTasks, FaBell, FaComment, FaMicroscope } from 'react-icons/fa'
 
-export default function Header({ setCurrentPage }) {
+export default function Header({ setCurrentPage, user, onLogout }) {
     const [searchQuery, setSearchQuery] = useState('')
     const [showResults, setShowResults] = useState(false)
     const [results, setResults] = useState([])
 
-    // Mock search function - replace with actual search logic
-    const handleSearch = (query) => {
+    // Real search function using apiService
+    const handleSearch = async (query) => {
         setSearchQuery(query)
-        
         if (query.length > 0) {
-            // Mock results - replace with actual search API call
-            const mockResults = [
-                {
-                    id: 1,
-                    title: "Complete project proposal",
-                    description: "Finish writing the project proposal for the new client",
-                    type: "task",
-                    status: "in-progress"
-                },
-                {
-                    id: 2,
-                    title: "Team meeting reminder",
-                    description: "Weekly standup meeting at 2 PM",
-                    type: "notification",
-                    status: "pending"
-                },
-                {
-                    id: 3,
-                    title: "Message from John",
-                    description: "Hey, can we discuss the budget changes?",
-                    type: "message",
-                    status: "unread"
-                }
-            ].filter(item => 
-                item.title.toLowerCase().includes(query.toLowerCase()) ||
-                item.description.toLowerCase().includes(query.toLowerCase())
-            )
-            
-            setResults(mockResults)
-            setShowResults(true)
+            try {
+                const tasks = await apiService.searchTasks(query, user?.id)
+                // Optionally, you can map tasks to add a type if needed
+                const results = tasks.map(task => ({
+                    ...task,
+                    type: 'task',
+                }))
+                setResults(results)
+                setShowResults(true)
+            } catch (err) {
+                setResults([])
+                setShowResults(true)
+            }
         } else {
             setShowResults(false)
             setResults([])
@@ -220,14 +204,37 @@ export default function Header({ setCurrentPage }) {
                 flex flex-row items-center gap-2 text-[14px] cursor-pointer">
                     Analytics
                 </button>
-                <button 
-                    onClick={() => setCurrentPage('user')}
-                    className="hover:text-blue-400 transition-colors flex flex-row items-center gap-2 text-[14px] cursor-pointer px-3 py-2 rounded-lg"
-                    style={{ minWidth: '120px' }}
-                >
-                    <span className="flex items-center justify-center w-7 h-7 bg-blue-600 rounded-full text-white font-semibold text-[15px]">U</span>
-                    <span className="font-medium">User Profile</span>
-                </button>
+                {/* Conditionally render User Profile or Login/Register */}
+                {user ? (
+                    <div className="flex items-center gap-2">
+                        <button 
+                            onClick={() => setCurrentPage('user')}
+                            className="hover:text-blue-400 transition-colors flex flex-row items-center gap-2 text-[14px] cursor-pointer px-3 py-2 rounded-lg"
+                            style={{ minWidth: '120px' }}
+                        >
+                            <span className="flex items-center justify-center w-7 h-7 bg-blue-600 rounded-full text-white font-semibold text-[15px]">
+                                {user.name ? user.name[0].toUpperCase() : 'U'}
+                            </span>
+                            <span className="font-medium">{user.name}</span>
+                        </button>
+                        <button
+                            onClick={onLogout}
+                            className="ml-2 px-3 py-2 rounded-lg bg-neutral-700/10 hover:bg-red-600 
+                            text-white text-[13px] font-medium transition-colors cursor-pointer"
+                        >
+                            <FiLogOut className='inline-block mr-1' />
+                        </button>
+                    </div>
+                ) : (
+                    <button
+                        onClick={() => setCurrentPage('login')}
+                        className="hover:text-blue-400 transition-colors flex flex-row items-center gap-2 text-[14px] cursor-pointer px-3 py-2 rounded-lg"
+                        style={{ minWidth: '120px' }}
+                    >
+                        <span className="flex items-center justify-center w-7 h-7 bg-neutral-600 rounded-full text-white font-semibold text-[15px]">?</span>
+                        <span className="font-medium">Login / Register</span>
+                    </button>
+                )}
             </nav>
 
         </header>

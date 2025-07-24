@@ -1,24 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import logo from '../assets/logo.svg'
 
-export default function User() {
-  // Example user data (replace with real data as needed)
-  const [user, setUser] = useState({
-    name: 'John Doe',
-    email: 'john.doe@email.com',
-    avatar: '',
-    phone: '+1 555-123-4567',
-    joined: '2024-01-15',
-    bio: 'Productivity enthusiast. Loves React and dark mode.',
-    theme: 'dark',
-    alerts: {
-      email: true,
-      push: false,
-      sms: false
-    }
-  });
-  const [theme, setTheme] = useState('dark');
-  const [alertPrefs, setAlertPrefs] = useState(user.alerts);
+export default function User({ user: userProp, onLogout }) {
+  // Get user from props or localStorage
+  const getInitialUser = () => {
+    if (userProp) return userProp;
+    const stored = localStorage.getItem('user');
+    return stored ? JSON.parse(stored) : null;
+  };
+  const [user, setUser] = useState(getInitialUser);
+  const [theme, setTheme] = useState(user?.theme || 'dark');
+  const [alertPrefs, setAlertPrefs] = useState(user?.alerts || { email: true, push: false, sms: false });
   const [editMode, setEditMode] = useState(false);
   const [editProfile, setEditProfile] = useState({ name: user.name, email: user.email, phone: user.phone, bio: user.bio });
   const [showPassword, setShowPassword] = useState(false);
@@ -36,8 +28,12 @@ export default function User() {
   };
 
   const handleLogout = () => {
-    // Add logout logic here
-    alert('Logged out!');
+    if (onLogout) {
+      onLogout();
+    } else {
+      localStorage.removeItem('user');
+      window.location.reload();
+    }
   };
 
   const handleEditProfileChange = (e) => {
@@ -66,6 +62,17 @@ export default function User() {
     setPasswords({ current: '', new: '', confirm: '' });
   };
 
+  if (!user) {
+    return (
+      <div className="w-full min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-semibold mb-4">No user logged in</h2>
+          <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white font-medium" onClick={() => window.location.reload()}>Go to Login</button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full min-h-screen bg-black text-white p-6 flex flex-col items-center">
       <div className="w-full max-w-[100dvw] bg-black border border-neutral-700 rounded-xl p-8 shadow-lg">
@@ -74,7 +81,7 @@ export default function User() {
           <div className="w-24 h-24 rounded-full bg-neutral-800 flex items-center justify-center text-4xl font-bold text-neutral-400">
             {user.avatar ? <img src={user.avatar} alt="avatar" className="w-full h-full rounded-full" /> : user.name[0]}
           </div>
-          <div className="flex-1">
+          <div className="flex flex-col w-[300px]">
             {editMode ? (
               <>
                 <input type="text" name="name" value={editProfile.name} onChange={handleEditProfileChange} className="bg-neutral-900 border border-neutral-700 rounded px-3 py-2 text-white mb-2 w-full" />
@@ -90,9 +97,9 @@ export default function User() {
               <>
                 <h2 className="text-2xl font-semibold text-white mb-1">{user.name}</h2>
                 <p className="text-neutral-400 mb-1">{user.email}</p>
-                <p className="text-neutral-500 mb-1">{user.phone}</p>
-                <p className="text-neutral-400 text-sm mb-1">{user.bio}</p>
-                <p className="text-neutral-600 text-xs">Joined: {user.joined}</p>
+                {user.phone && <p className="text-neutral-500 mb-1">{user.phone}</p>}
+                {user.bio && <p className="text-neutral-400 text-sm mb-1">{user.bio}</p>}
+                {user.joined && <p className="text-neutral-600 text-xs">Joined: {user.joined}</p>}
                 <button onClick={() => setEditMode(true)} className="mt-2 text-blue-400 hover:underline text-sm">Edit Profile</button>
               </>
             )}

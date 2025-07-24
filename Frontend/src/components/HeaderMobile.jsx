@@ -1,48 +1,30 @@
 import React, { useState } from 'react'
+import apiService from '../services/api'
 import logo from '../assets/logo.svg'
 import { FaTasks, FaBell, FaComment, FaMicroscope, FaBars, FaTimes } from 'react-icons/fa'
 
-export default function HeaderMobile({ setCurrentPage }) {
+export default function HeaderMobile({ setCurrentPage, user }) {
     const [searchQuery, setSearchQuery] = useState('')
     const [showResults, setShowResults] = useState(false)
     const [results, setResults] = useState([])
     const [isNavOpen, setIsNavOpen] = useState(false)
 
-    // Mock search function - replace with actual search logic
-    const handleSearch = (query) => {
+    // Real search function using apiService
+    const handleSearch = async (query) => {
         setSearchQuery(query)
-        
         if (query.length > 0) {
-            // Mock results - replace with actual search API call
-            const mockResults = [
-                {
-                    id: 1,
-                    title: "Complete project proposal",
-                    description: "Finish writing the project proposal for the new client",
-                    type: "task",
-                    status: "in-progress"
-                },
-                {
-                    id: 2,
-                    title: "Team meeting reminder",
-                    description: "Weekly standup meeting at 2 PM",
-                    type: "notification",
-                    status: "pending"
-                },
-                {
-                    id: 3,
-                    title: "Message from John",
-                    description: "Hey, can we discuss the budget changes?",
-                    type: "message",
-                    status: "unread"
-                }
-            ].filter(item => 
-                item.title.toLowerCase().includes(query.toLowerCase()) ||
-                item.description.toLowerCase().includes(query.toLowerCase())
-            )
-            
-            setResults(mockResults)
-            setShowResults(true)
+            try {
+                const tasks = await apiService.searchTasks(query, user?.id)
+                const results = tasks.map(task => ({
+                    ...task,
+                    type: 'task',
+                }))
+                setResults(results)
+                setShowResults(true)
+            } catch (err) {
+                setResults([])
+                setShowResults(true)
+            }
         } else {
             setShowResults(false)
             setResults([])
@@ -238,19 +220,35 @@ export default function HeaderMobile({ setCurrentPage }) {
                         {/* Footer */}
                         <div className="absolute bottom-4 left-4 right-4">
                             <div className="border-t border-neutral-700 pt-4">
-                                <button 
-                                    className="flex items-center gap-3 p-3 text-white hover:bg-gray-900 
-                                    rounded-lg transition-colors w-full text-left"
-                                    onClick={() => handleNavItemClick('user')}
-                                >
-                                    <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                                        <span className="text-sm font-medium">U</span>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm font-medium">User Profile</p>
-                                        <p className="text-xs text-neutral-400">Settings & More</p>
-                                    </div>
-                                </button>
+                                {user ? (
+                                    <button 
+                                        className="flex items-center gap-3 p-3 text-white hover:bg-gray-900 
+                                        rounded-lg transition-colors w-full text-left"
+                                        onClick={() => handleNavItemClick('user')}
+                                    >
+                                        <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                                            <span className="text-sm font-medium">{user.name ? user.name[0].toUpperCase() : 'U'}</span>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-medium">{user.name ? user.name : 'User Profile'}</p>
+                                            <p className="text-xs text-neutral-400">Settings & More</p>
+                                        </div>
+                                    </button>
+                                ) : (
+                                    <button
+                                        className="flex items-center gap-3 p-3 text-white hover:bg-gray-900 
+                                        rounded-lg transition-colors w-full text-left"
+                                        onClick={() => handleNavItemClick('login')}
+                                    >
+                                        <div className="w-8 h-8 bg-neutral-600 rounded-full flex items-center justify-center">
+                                            <span className="text-sm font-medium">?</span>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-medium">Login / Register</p>
+                                            <p className="text-xs text-neutral-400">Access your account</p>
+                                        </div>
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>

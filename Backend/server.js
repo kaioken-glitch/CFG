@@ -37,6 +37,96 @@ app.use((req, res, next) => {
   next()
 })
 
+// --- User Auth Setup ---
+const USERS_FILE = path.join(__dirname, 'data', 'users.json');
+const bcrypt = require('bcryptjs');
+
+const ensureUsersFile = async () => {
+  const dataDir = path.dirname(USERS_FILE);
+  try {
+    await fs.access(dataDir);
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      await fs.mkdir(dataDir, { recursive: true });
+    }
+  }
+  try {
+    await fs.access(USERS_FILE);
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      await fs.writeFile(USERS_FILE, '[]', 'utf8');
+    }
+  }
+};
+
+const readUsers = async () => {
+  await ensureUsersFile();
+  const data = await fs.readFile(USERS_FILE, 'utf8');
+  try {
+    const users = JSON.parse(data);
+    return Array.isArray(users) ? users : [];
+  } catch {
+    return [];
+  }
+};
+
+const writeUsers = async (users) => {
+  await ensureUsersFile();
+  await fs.writeFile(USERS_FILE, JSON.stringify(users, null, 2), 'utf8');
+};
+
+// --- Signup Route ---
+app.post('/api/signup', async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: 'Name, email, and password are required.' });
+    }
+    const users = await readUsers();
+    if (users.find(u => u.email === email)) {
+      return res.status(409).json({ message: 'Email already registered.' });
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = {
+      id: users.length > 0 ? Math.max(...users.map(u => u.id || 0)) + 1 : 1,
+      name,
+      email,
+      password: hashedPassword,
+      createdAt: new Date().toISOString()
+    };
+    users.push(newUser);
+    await writeUsers(users);
+    // Return user info (no password)
+    const { password: _, ...userData } = newUser;
+    res.status(201).json(userData);
+  } catch (err) {
+    res.status(500).json({ message: 'Signup failed.', error: err.message });
+  }
+});
+
+// --- Login Route ---
+app.post('/api/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Email and password are required.' });
+    }
+    const users = await readUsers();
+    const user = users.find(u => u.email === email);
+    if (!user) {
+      return res.status(401).json({ message: 'Invalid email or password.' });
+    }
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
+      return res.status(401).json({ message: 'Invalid email or password.' });
+    }
+    const { password: _, ...userData } = user;
+    res.json(userData);
+  } catch (err) {
+    res.status(500).json({ message: 'Login failed.', error: err.message });
+  }
+});
+
 // File system helper functions
 const ensureDataDirectory = async () => {
   const dataDir = path.dirname(TASKS_FILE)
@@ -229,14 +319,19 @@ app.get('/api/tasks/stats/overview', async (req, res) => {
   }
 })
 
-// Get all tasks with optional filtering
+// Get all tasks with optional filtering, including userId
 app.get('/api/tasks', async (req, res) => {
   console.log('GET /api/tasks called with query:', req.query)
   try {
-    const { search, category, priority, status, completed } = req.query
+    const { search, category, priority, status, completed, userId } = req.query
     let tasks = await readTasks()
 
-    // Apply filters
+    // Filter by userId if provided
+    if (userId) {
+      tasks = tasks.filter(task => String(task.userId) === String(userId))
+    }
+
+    // Apply other filters
     if (search) {
       const searchTerm = search.toLowerCase()
       tasks = tasks.filter(task => 
@@ -299,7 +394,7 @@ app.get('/api/tasks/:id', async (req, res) => {
   }
 })
 
-// Create new task
+// Create new task, tie to userId if provided
 app.post('/api/tasks', async (req, res) => {
   console.log('POST /api/tasks called with:', req.body)
   try {
@@ -313,7 +408,8 @@ app.post('/api/tasks', async (req, res) => {
       assignedTo = 'Self',
       tags = '',
       status = 'todo',
-      completed = false
+      completed = false,
+      userId // <-- Accept userId from request
     } = req.body
 
     // Validation
@@ -353,7 +449,8 @@ app.post('/api/tasks', async (req, res) => {
       status,
       completed: Boolean(completed),
       createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
+      userId: userId ? Number(userId) : undefined // Set userId if provided
     }
 
     tasks.push(newTask)
