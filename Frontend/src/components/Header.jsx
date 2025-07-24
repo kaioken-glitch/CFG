@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import logo from '../assets/logo.svg'
-import apiService from '../Services/api'
+import apiService from '../services/api'
 import { FiLogOut } from 'react-icons/fi';
 import { FaTasks, FaBell, FaComment, FaMicroscope } from 'react-icons/fa'
 

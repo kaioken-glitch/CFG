@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import apiService from '../Services/api'
+import apiService from '../services/api'
 import logo from '../assets/logo.svg'
 import { FaTasks, FaBell, FaComment, FaMicroscope, FaBars, FaTimes } from 'react-icons/fa'
 

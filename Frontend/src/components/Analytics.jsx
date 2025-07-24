@@ -17,7 +17,7 @@ import {
   FaAward,
   FaSync
 } from 'react-icons/fa'
-import ApiService from '../Services/api'
+import ApiService from '../services/api'
 
 export default function Analytics() {
   const [tasks, setTasks] = useState([])

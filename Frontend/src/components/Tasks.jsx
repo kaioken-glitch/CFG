@@ -15,7 +15,7 @@ import {
   FaSave,
   FaTrash
 } from "react-icons/fa";
-import ApiService from "../Services/api";
+import ApiService from "../services/api";
 
 function Tasks() {
 
