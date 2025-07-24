@@ -11,28 +11,25 @@ export default function HeaderMobile({ setCurrentPage, user }) {
 
     // Real search function using apiService
     const handleSearch = async (query) => {
-    setSearchQuery(query)
-    if (query.length > 0) {
-        try {
-            // Only pass user.id if it exists
-            const tasks = user?.id
-                ? await apiService.searchTasks(query, user.id)
-                : await apiService.searchTasks(query)
-            const results = tasks.map(task => ({
-                ...task,
-                type: 'task',
-            }))
-            setResults(results)
-            setShowResults(true)
-        } catch (err) {
+        setSearchQuery(query)
+        if (query.length > 0) {
+            try {
+                const tasks = await apiService.searchTasks(query, user?.id)
+                const results = tasks.map(task => ({
+                    ...task,
+                    type: 'task',
+                }))
+                setResults(results)
+                setShowResults(true)
+            } catch (err) {
+                setResults([])
+                setShowResults(true)
+            }
+        } else {
+            setShowResults(false)
             setResults([])
-            setShowResults(true)
         }
-    } else {
-        setShowResults(false)
-        setResults([])
     }
-}
 
     const handleInputFocus = () => {
         if (searchQuery.length > 0) {
@@ -135,7 +132,7 @@ export default function HeaderMobile({ setCurrentPage, user }) {
                                                     flex items-center justify-center ${getItemColor(item.type, item.status)}`}>
                                                         {getItemIcon(item.type)}
                                                     </div>
-                                                    <div className="textContent flex-1">
+                                                    <div className="textContent flex-1 overflow-ellipsis overflow-hidden">
                                                         <h4 className="text-[12px] font-semibold text-gray-800">{item.title}</h4>
                                                         <p className="max-w-[90%] text-[10px] text-overflow-ellipsis text-gray-500 truncate">
                                                             {item.description}

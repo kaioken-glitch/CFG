@@ -121,10 +121,10 @@
     "estimatedTime": "3",
     "assignedTo": "Group",
     "tags": "urgent, deadlines, completions, coordination",
-    "status": "in-progress",
-    "completed": false,
+    "status": "completed",
+    "completed": true,
     "createdAt": "2025-07-24T12:59:15.189Z",
-    "updatedAt": "2025-07-24T12:59:15.189Z",
+    "updatedAt": "2025-07-24T13:31:52.579Z",
     "userId": 2
   }
 ]
