@@ -1,21 +1,7 @@
   
-const API_BASE_URL = 'http://localhost:5000/api'
+const API_BASE_URL = 'https://cfg-backend-4smp.onrender.com'
     
 class ApiService {
-  // Auth operations
-  async login(email, password) {
-    return this.request('/login', {
-      method: 'POST',
-      body: JSON.stringify({ email, password })
-    });
-  }
-
-  async signup(name, email, password) {
-    return this.request('/signup', {
-      method: 'POST',
-      body: JSON.stringify({ name, email, password })
-    });
-  }
   constructor() {
     this.baseURL = API_BASE_URL
   }

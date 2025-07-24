@@ -16,8 +16,8 @@ app.use(cors({
     'http://localhost:3000', 
     'http://localhost:5173', 
     'http://127.0.0.1:5173',
-    'https://flowstate-1.onrender.com', // Your actual frontend URL
-    process.env.FRONTEND_URL || 'https://flowstate-1.onrender.com'
+    'https://cfg-i068.onrender.com', // Your actual frontend URL
+    process.env.FRONTEND_URL || 'https://cfg-i068.onrender.com'
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],

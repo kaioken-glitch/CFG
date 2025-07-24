@@ -96,22 +96,6 @@
     "userId": 1
   },
   {
-    "id": 7,
-    "title": "Create Presentation Slides",
-    "description": "To create project presentation files , for class presentation for end of phase project",
-    "category": "Work",
-    "priority": "high",
-    "dueDate": "2025-07-26",
-    "estimatedTime": "5",
-    "assignedTo": "Group",
-    "tags": "urgent, deadline, commitments",
-    "status": "todo",
-    "completed": false,
-    "createdAt": "2025-07-24T07:47:38.629Z",
-    "updatedAt": "2025-07-24T07:47:38.629Z",
-    "userId": 1
-  },
-  {
     "id": 8,
     "title": "Project Slides",
     "description": "To create a complete and comprehensive project slide outlining member roles and application use cases, and functions.",
