@@ -12,7 +12,8 @@
     "status": "completed",
     "completed": true,
     "createdAt": "2025-07-17T11:37:35.453Z",
-    "updatedAt": "2025-07-22T15:25:17.252Z"
+    "updatedAt": "2025-07-22T15:25:17.252Z",
+    "userId": 1
   },
   {
     "id": 2,
@@ -27,7 +28,8 @@
     "status": "completed",
     "completed": true,
     "createdAt": "2025-07-17T11:37:35.454Z",
-    "updatedAt": "2025-07-22T15:25:16.333Z"
+    "updatedAt": "2025-07-22T15:25:16.333Z",
+    "userId": 1
   },
   {
     "id": 3,
@@ -42,7 +44,8 @@
     "status": "completed",
     "completed": true,
     "createdAt": "2025-07-17T11:40:33.392Z",
-    "updatedAt": "2025-07-22T15:25:15.144Z"
+    "updatedAt": "2025-07-22T15:25:15.144Z",
+    "userId": 1
   },
   {
     "id": 4,
@@ -57,7 +60,8 @@
     "status": "completed",
     "completed": true,
     "createdAt": "2025-07-23T08:21:57.773Z",
-    "updatedAt": "2025-07-23T14:17:49.895Z"
+    "updatedAt": "2025-07-23T14:17:49.895Z",
+    "userId": 1
   },
   {
     "id": 5,
@@ -72,7 +76,8 @@
     "status": "completed",
     "completed": true,
     "createdAt": "2025-07-23T08:28:04.041Z",
-    "updatedAt": "2025-07-24T07:12:57.607Z"
+    "updatedAt": "2025-07-24T07:12:57.607Z",
+    "userId": 1
   },
   {
     "id": 6,
@@ -87,7 +92,8 @@
     "status": "completed",
     "completed": true,
     "createdAt": "2025-07-24T07:07:54.679Z",
-    "updatedAt": "2025-07-24T07:21:53.456Z"
+    "updatedAt": "2025-07-24T07:21:53.456Z",
+    "userId": 1
   },
   {
     "id": 7,
@@ -102,6 +108,7 @@
     "status": "todo",
     "completed": false,
     "createdAt": "2025-07-24T07:47:38.629Z",
-    "updatedAt": "2025-07-24T07:47:38.629Z"
+    "updatedAt": "2025-07-24T07:47:38.629Z",
+    "userId": 1
   }
 ]

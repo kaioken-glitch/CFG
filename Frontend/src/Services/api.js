@@ -1,8 +1,38 @@
+  
 const API_BASE_URL = 'http://localhost:5000/api'
     
 class ApiService {
+  // Auth operations
+  async login(email, password) {
+    return this.request('/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password })
+    });
+  }
+
+  async signup(name, email, password) {
+    return this.request('/signup', {
+      method: 'POST',
+      body: JSON.stringify({ name, email, password })
+    });
+  }
   constructor() {
     this.baseURL = API_BASE_URL
+  }
+
+  // Auth operations
+  async login(email, password) {
+    return this.request('/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password })
+    });
+  }
+
+  async signup(name, email, password) {
+    return this.request('/signup', {
+      method: 'POST',
+      body: JSON.stringify({ name, email, password })
+    });
   }
 
   async request(endpoint, options = {}) {
@@ -38,6 +68,7 @@ class ApiService {
 
   // Task operations
   async getTasks(filters = {}) {
+    // If userId is present, include it in query params
     const queryParams = new URLSearchParams(filters).toString()
     const endpoint = queryParams ? `/tasks?${queryParams}` : '/tasks'
     return this.request(endpoint)
@@ -71,8 +102,11 @@ class ApiService {
     return this.updateTask(id, { completed: true, status: 'completed' })
   }
 
-  async searchTasks(query) {
-    return this.getTasks({ search: query })
+  async searchTasks(query, userId) {
+    // Pass userId if provided
+    const filters = { search: query }
+    if (userId) filters.userId = userId
+    return this.getTasks(filters)
   }
 
   async getTaskStats() {
