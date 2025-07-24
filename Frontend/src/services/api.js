@@ -54,10 +54,13 @@ class ApiService {
 
   // Task operations
   async getTasks(filters = {}) {
-    // If userId is present, include it in query params
-    const queryParams = new URLSearchParams(filters).toString()
-    const endpoint = queryParams ? `/tasks?${queryParams}` : '/tasks'
-    return this.request(endpoint)
+  // Remove undefined or null userId
+    if (filters.userId === undefined || filters.userId === null) {
+      delete filters.userId;
+    }
+    const queryParams = new URLSearchParams(filters).toString();
+    const endpoint = queryParams ? `/tasks?${queryParams}` : '/tasks';
+    return this.request(endpoint);
   }
 
   async getTask(id) {
