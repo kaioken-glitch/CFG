@@ -21,7 +21,7 @@ export default function Login({ setUser }) {
     setError('');
     setLoading(true);
     try {
-      const user = await apiService.request('/login', {
+      const user = await apiService.request('/api/login', {
         method: 'POST',
         body: JSON.stringify({ email, password })
       });
@@ -49,7 +49,7 @@ export default function Login({ setUser }) {
     setSignupError('');
     setLoading(true);
     try {
-      const user = await apiService.request('/signup', {
+      const user = await apiService.request('/api/signup', {
         method: 'POST',
         body: JSON.stringify({
           name: signupData.name,
